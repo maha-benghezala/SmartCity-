@@ -1,0 +1,168 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <!-- Dashboard breadcrumb section -->
+
+    <!-- DASHBOARD SECTION -->
+    <br>
+    <section class="clearfix bg-dark equalHeight dashboardSection">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default panel-card">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div id="div_chart" class="col-sm-6 col-xs-6"></div>
+                                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                <script type="text/javascript">
+                                    {{ gc_draw(piechart, 'div_chart') }}
+                                </script>
+                                <div class="col-sm-9 col-xs-12">
+                                    <div class="flot-chart">
+                                        <div class="flot-chart-content" id="flot-dashboard-chart"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h3>Problemes <a href="#">({{ p|length }}) <i class="fa fa-chevron-down"></i></a></h3>
+                <div class="background-white p30 mb50">
+                    <div class="cards-system">
+                        {% for probleme in p %}
+                            <div class="card-system">
+                                <div class="card-system-inner">
+                                    <div class="card-system-image">
+                                        <img src="{{ asset(probleme.image) }}" height="120" width="120">
+
+                                    </div><!-- /.card-system-image -->
+
+                                    <div class="card-system-content">
+                                        <h2><a href="listing-detail.html">{{ probleme.titre }}</a></h2>
+                                        <h2><a href="listing-detail.html">Sur :{{ probleme.idMunicipalite.nom }}</a></h2>
+                                        <h2><a href="listing-detail.html">Par :{{ probleme.idUser.nom }}</a></h2>
+                                        <h3>Publiée le :{{ probleme.getDate()|date }}</h3>
+                                        <a href='javascript:popup("http://127.0.0.1:8000/voir/{{ probleme.id }}")'><button type="button" class="btn btn-primary btn-xs">Voir</button></a>
+                                        <a href="{{ path('bannir_Probleme',{'id':probleme.id}) }}" class="btn btn-secondary btn-xs">Ban</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div><!-- /.card-system -->
+                </div>
+            </div><!-- /.col-* -->
+                <div class="col-sm-4">
+                    <h3>Solutions <a href="#">({{ s|length }}) <i class="fa fa-chevron-down"></i></a></h3>
+                    <div class="background-white p30 mb50">
+                        <div class="cards-system">
+                            {% for solution in s %}
+                            <div class="card-system">
+                                <div class="card-system-inner">
+                                    <div class="card-system-image">
+                                        <img src="{{ asset(solution.image) }}" height="120" width="120">
+
+                                     </div><!-- /.card-system-image -->
+
+                                <div class="card-system-content">
+                                    <h2><a href="listing-detail.html">{{ solution.titre }}</a></h2>
+                                    <h2><a href="listing-detail.html">Par :{{ solution.idMunicipalite.nom }}</a></h2>
+                                    <h2><a href="listing-detail.html">Sur :{{ solution.Probleme.titre }}</a></h2>
+                                    <h3>Publiée le :{{ solution.getDateDebut()|date }}</h3>
+                                    <a href="#" class="btn btn-primary btn-xs">voir</a>
+                                    <a href="{{ path('supprimer_Solution',{'id':solution.id}) }}" class="btn btn-secondary btn-xs">Supprimer</a>
+                                </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div><!-- /.card-system -->
+                    </div>
+                </div><!-- /.col-* -->
+                <div class="col-sm-4">
+                    <h3>Suggestions <a href="#">({{ q|length }}) <i class="fa fa-chevron-down"></i></a></h3>
+
+                    <div class="background-white p30 mb50">
+                        <div class="cards-system">
+                            {% for suggestion in q %}
+                            <div class="card-system">
+                                <div class="card-system-inner">
+                                    <div class="card-system-image">
+                                        <img src="{{ asset('questions-to-ask1.png') }}" width="150" height="150">
+                                        <a href="listing-detail.html"></a>
+                                    </div><!-- /.card-system-image -->
+
+                                    <div class="card-system-content">
+                                        <h2><a href="listing-detail.html">{{ suggestion.titre }}</a></h2>
+                                        <h2><a href="listing-detail.html">{{ suggestion.question }}</a></h2>
+                                        <h3>Publiée le :{{ suggestion.getDate()|date }}</h3>
+                                        <a href="#" class="btn btn-primary btn-xs">voir</a>
+                                        <a href="{{ path('del',{'id':suggestion.id}) }}" class="btn btn-secondary btn-xs">Ban</a>
+                                    </div>
+                                </div>
+                            </div><!-- /.card-system -->
+
+
+                    {% endfor %}
+
+                        </div><!-- /.cards-system -->
+                    </div>
+                </div><!-- /.col-* -->
+
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>Utilisateurs <a href="#">({{ d|length }}) <i class="fa fa-chevron-down"></i></a></h3>
+
+                    <div class="users">
+                        <table class="table">
+                            <tbody>
+                            {% for user in d %}
+                            {% for x in user.Roles %}
+                            {% if x == "ROLE_SIMPLE_USER" or x == "ROLE_MUNICIPALITE" %}
+                            <tr>
+                                <td><a class="user" href="#"><img src="{{ asset(user.image) }}" alt=""></a></td>
+                                <td class="hidden-xs visible-sm visible-md visible-lg">
+                                    {% if x == "ROLE_SIMPLE_USER" %}
+                                    <h2><a href="#">{{ user.nom }} {{ user.prenom }}</a></h2>
+                                    <h5><span class="label-secondary">Utilisateur simple</span></h5>
+                                    {% endif %}
+                                    {% if x == "ROLE_MUNICIPALITE" %}
+                                        <h2><a href="#">{{ user.nom }}</a></h2>
+                                        <h3><a href="#">Adresse :{{ user.adresse }}</a></h3>
+                                        <h5><span class="label-primary">Municipalité</span></h5>
+                                    {% endif %}
+                                    <h3>Email: {{ user.email }}</h3>
+                                    <h3>Téléphone: {{ user.telephone }}</h3>
+                                    <h3>Last login: {{ user.getLastLogin()|date }}</h3>
+                                </td>
+                                <td class="right">
+                                    <a href="#" class="btn btn-xs btn-primary">voir</a>
+                                    {% if user.enabled == 1 %}
+                                    <a href="{{ path('bannir_user',{'id':user.id}) }}" class="btn btn-xs btn-danger">bannir</a>
+                                    {% endif %}
+                                    {% if user.enabled == 0 %}
+                                        <a href="{{ path('approuver_user',{'id':user.id}) }}" class="btn btn-xs btn-danger">approuver</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+{% endblock %}
+{% block js %}
+    <script>
+
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}

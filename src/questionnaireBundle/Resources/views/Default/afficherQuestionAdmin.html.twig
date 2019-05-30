@@ -1,0 +1,54 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <section class="clearfix bg-dark listyPage">
+    <div class="content-admin-main-inner">
+    <div class="container">
+    <div class="row">
+    <div class="col-xs-12">
+        <div class="dashboardPageTitle">
+            <h2>Suggestions</h2>
+        </div>
+        <div class="background-white p20 mb50">
+            <div class="table-responsive"  data-pattern="priority-columns">
+                <table class="table listingsTable">
+
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Question</th>
+                <th>Description</th>
+                <th>Municipalité</th>
+                <th>Choix</th>
+                <th>Options</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for question in question %}
+            <tr>
+                <th>{{ question.titre }}</th>
+                <td>{{ question.question }}</td>
+                <td>{{ question.description }}</td>
+                <td>{{ question.idMunicipalite.nom }}</td>
+                <td>{{ question.choix1 }} | {{ question.choix2 }} <br>
+                {{ question.choix3 }} | {{ question.choix4 }}</td>
+                <td><a href='javascript:popup("http://127.0.0.1:8000/afficheravis/{{ question.id }}")' class="btn btn-primary btn-block">Résultats</a></td>
+            </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+    {% endblock %}
+{% block js %}
+    <script>
+
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}

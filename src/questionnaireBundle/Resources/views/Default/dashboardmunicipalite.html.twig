@@ -1,0 +1,118 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <!-- Dashboard breadcrumb section -->
+
+    <!-- DASHBOARD SECTION -->
+    <br>
+    <section class="clearfix bg-dark equalHeight dashboardSection">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default panel-card">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div id="div_chart" class="col-sm-6 col-xs-6"></div>
+                                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                <script type="text/javascript">
+                                    {{ gc_draw(piechart, 'div_chart') }}
+                                </script>
+                                <div class="col-sm-9 col-xs-12">
+                                    <div class="flot-chart">
+                                        <div class="flot-chart-content" id="flot-dashboard-chart"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h3>Problemes <a href="#">({{ p|length }}) <i class="fa fa-chevron-down"></i></a></h3>
+                <div class="background-white p30 mb50">
+                    <div class="cards-system">
+                        {% for probleme in p %}
+                            <div class="card-system">
+                                <div class="card-system-inner">
+                                    <div class="card-system-image">
+                                        <img src="{{ asset(probleme.image) }}" height="120" width="120">
+
+                                    </div><!-- /.card-system-image -->
+
+                                    <div class="card-system-content">
+                                        <h2><a href="listing-detail.html">{{ probleme.titre }}</a></h2>
+                                        <h2><a href="listing-detail.html">Sur :{{ probleme.idMunicipalite.nom }}</a></h2>
+                                        <h2><a href="listing-detail.html">Par :{{ probleme.idUser.nom }}</a></h2>
+                                        <h3>Publiée le :{{ probleme.getDate()|date }}</h3>
+                                        <a href='javascript:popup("http://127.0.0.1:8000/voir/{{ probleme.id }}")'><button type="button" class="btn btn-primary btn-xs">Voir</button></a>
+                                        <a href="#" class="btn btn-secondary btn-xs">Ban</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div><!-- /.card-system -->
+                </div>
+            </div><!-- /.col-* -->
+            <div class="col-sm-4">
+                <h3>Solutions <a href="#">({{ s|length }}) <i class="fa fa-chevron-down"></i></a></h3>
+                <div class="background-white p30 mb50">
+                    <div class="cards-system">
+                        {% for solution in s %}
+                            <div class="card-system">
+                                <div class="card-system-inner">
+                                    <div class="card-system-image">
+                                        <img src="{{ asset(solution.image) }}" height="120" width="120">
+
+                                    </div><!-- /.card-system-image -->
+
+                                    <div class="card-system-content">
+                                        <h2><a href="listing-detail.html">{{ solution.titre }}</a></h2>
+                                        <h2><a href="listing-detail.html">Par :{{ solution.idMunicipalite.nom }}</a></h2>
+                                        <h2><a href="listing-detail.html">Sur :{{ solution.Probleme.titre }}</a></h2>
+                                        <h3>Publiée le :{{ solution.getDateDebut()|date }}</h3>
+                                        <a href="#" class="btn btn-primary btn-xs">voir</a>
+                                        <a href="#" class="btn btn-secondary btn-xs">Ban</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div><!-- /.card-system -->
+                </div>
+            </div><!-- /.col-* -->
+            <div class="col-sm-4">
+                <h3>Suggestions <a href="#">({{ q|length }}) <i class="fa fa-chevron-down"></i></a></h3>
+                {% for suggestion in q %}
+                    <div class="background-white p30 mb50">
+                        <div class="cards-system">
+                            <div class="card-system">
+                                <div class="card-system-inner">
+                                    <div class="card-system-image">
+                                        <img src="{{ asset('questions-to-ask1.png') }}" width="150" height="150">
+                                        <a href="listing-detail.html"></a>
+                                    </div><!-- /.card-system-image -->
+
+                                    <div class="card-system-content">
+                                        <h2><a href="listing-detail.html">{{ suggestion.titre }}</a></h2>
+                                        <h2><a href="listing-detail.html">{{ suggestion.question }}</a></h2>
+                                        <h3>Publiée le :{{ suggestion.getDate()|date }}</h3>
+                                        <a href="#" class="btn btn-primary btn-xs">voir</a>
+                                        <a href="#" class="btn btn-secondary btn-xs">Ban</a>
+                                    </div>
+                                </div>
+                            </div><!-- /.card-system -->
+
+
+                        </div><!-- /.cards-system -->
+                    </div>
+                {% endfor %}
+            </div><!-- /.col-* -->
+        </div>
+    </section>
+{% endblock %}
+{% block js %}
+    <script>
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}

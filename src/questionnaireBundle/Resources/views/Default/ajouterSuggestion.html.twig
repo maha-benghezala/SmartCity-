@@ -1,0 +1,106 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    {{ form_start(form) }}
+    <section class="clearfix bg-dark listingSection">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="dashboardBoxBg mb30">
+                        <div class="profileIntro paraMargin">
+                            <h3>Contact</h3>
+                            <p>Nous ne sommes pas responsables des dommages causés par l'utilisation de ce site, ou en publiant des listes des propriétés ici. S'il vous plaît utiliser notre site à votre propre discrétion et exercer un bon jugement ainsi que le bon sens lors de la publicité des affaires ici.</p>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    {{ form_label(form.titre)}}
+                                    {{ form_widget(form.titre)}}
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    {{ form_label(form.description)}}
+                                    {{ form_widget(form.description)}}
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    {{ form_label(form.type)}}
+                                    {{ form_widget(form.type)}}
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    {{ form_label(form.Probleme)}}
+                                    {{ form_widget(form.Probleme)}}
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    {{ form_label(form.dateFin)}}
+                                    {{ form_widget(form.dateFin)}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="dashboardBoxBg mb30">
+                        <div class="profileIntro paraMargin">
+                            <h3>Gallerie</h3>
+                            <p>Nous ne sommes pas responsables des dommages causés par l'utilisation de ce site, ou en publiant des listes d'entreprises ici. S'il vous plaît utiliser notre site à votre propre discrétion et exercer un bon jugement ainsi que le bon sens lors de la publicité des affaires ici</p>
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <div class="imageUploader text-center">
+                                        <div class="file-upload">
+                                            <div class="upload-area">
+                                                {{ form_label(form.image) }}
+                                                {{ form_widget(form.image) }}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboardBoxBg mb30" id="rapport">
+                        <div class="profileIntro paraMargin">
+                            <h3>Rapport</h3>
+                            <p>Nous ne sommes pas responsables des dommages causés par l'utilisation de ce site, ou en publiant des listes d'entreprises ici. S'il vous plaît utiliser notre site à votre propre discrétion et exercer un bon jugement ainsi que le bon sens lors de la publicité des affaires ici</p>
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <div class="imageUploader text-center">
+                                        <div class="file-upload">
+                                            <div class="upload-area">
+                                                {{ form_label(form.rapport) }}
+                                                {{ form_widget(form.rapport) }}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-footer text-center">
+                        {{ form_widget(form.Valider)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{ form_end(form) }}
+{% endblock %}
+{% block js %}
+    <script>
+        $("#questionnairebundle_suggestion_type").change(function (e) {
+
+            var valeur = $("#questionnairebundle_suggestion_type option:selected" ).text();
+            console.log(valeur);
+            if ( valeur == "Suggestion"){
+                $('#questionnairebundle_suggestion_Probleme').hide();
+                $('#rapport').hide();
+                $("#questionnairebundle_suggestion_type").change(function (e) {
+                    if (valeur == "Suggestion une solution"){
+                        $('#questionnairebundle_suggestion_Probleme').show();
+                        $('#rapport').show();
+                    }
+                })
+
+            }
+
+        })
+    </script>
+{% endblock %}

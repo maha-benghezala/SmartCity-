@@ -1,0 +1,126 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    {{ form_start(form) }}
+    <section class="clearfix bg-dark listingSection">
+        <div class="content-admin-main-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="background-white p20 mb50">
+                    <div class="dashboardBoxBg mb30">
+                        <div class="profileIntro paraMargin">
+                            <h3>à propos</h3>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    {{ form_label(form.nom) }}
+                                    {{ form_widget(form.nom) }}
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    {{ form_label(form.president) }}
+                                    {{ form_widget(form.president) }}
+                                </div>
+                                <div class="form-group col-xs-12">
+                                    {{ form_label(form.description) }}
+                                    {{ form_widget(form.description) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboardBoxBg mb30">
+                        <div class="profileIntro paraMargin">
+                            <h3>Contact</h3>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    {{ form_label(form.adresse) }}
+                                    {{ form_widget(form.adresse) }}
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    {{ form_label(form.telephone) }}
+                                    {{ form_widget(form.telephone) }}
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <div id="map" style="background: #00d2b8"></div>
+                                </div>
+                                <div class="form-group col-sm-6 ">
+                                    {{ form_label(form.latitude) }}
+                                    {{ form_widget(form.latitude) }}
+                                </div>
+                                <div class="form-group col-sm-6 ">
+                                    {{ form_label(form.longitude) }}
+                                    {{ form_widget(form.longitude) }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="dashboardBoxBg mb30">
+                        <div class="profileIntro paraMargin">
+                            <h3>Gallerie</h3>
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <div class="imageUploader text-center">
+                                        <div class="file-upload">
+                                            <div class="upload-area">
+                                                {{ form_label(form.image) }}
+                                                {{ form_widget(form.image) }}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboardBoxBg mb30">
+                        <div class="profileIntro paraMargin">
+                            <h3>Informations du compte</h3>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                {{ form_label(form.username) }}
+                                {{ form_widget(form.username) }}
+                                </div>
+                        <div class="form-group col-sm-6 ">
+                                {{ form_label(form.plainPassword.first) }}
+                                {{ form_widget(form.plainPassword.first) }}
+                            </div>
+                            <div class="form-group col-sm-6 ">
+                                {{ form_label(form.email) }}
+                                {{ form_widget(form.email) }}
+                            </div>
+                            <div class="form-group col-sm-6 ">
+                                {{ form_label(form.plainPassword.second) }}
+                                {{ form_widget(form.plainPassword.second) }}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-footer text-center">
+                        {{ form_widget(form.Enregistrer) }}
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <style>
+            /* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+            /* Optional: Makes the sample page fill the window. */
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+
+            }
+
+        </style>
+    </section>
+    {{ form_end(form) }}
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('Map/jq.js') }}">
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYy42R1JcZqt_UlmfQqBP6nlZt57aNJzs&callback=initMap">
+    </script>
+{% endblock %}

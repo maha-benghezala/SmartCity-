@@ -1,0 +1,378 @@
+{% extends('base.html.twig') %}
+{% block title %}
+    -  Forum
+{% endblock %}
+
+ 
+    {% block ressources %}
+
+    {% endblock %}
+    
+{% block section %}
+
+    <section class="clerfix">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-8 col-xs-12">
+
+
+
+
+
+
+                    <div class="col-xs-12" >
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Make Post :</div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="What's in your Mind ?" aria-describedby="basic-addon2" data-toggle="modal" data-target="#myModal">
+                                <a href="category-list-right.html#" class="input-group-addon" id="basic-addon2" hidden="true"><i value="Post" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="dashboard-list-box" >
+                            {% for modele in modeles %}
+                                {% set nb = 5 %}
+                                {% if(modele.nbreSignal < nb) %}
+                                    <div class="single-list">
+                                        <div class="media booking-list-media">
+                                            <div class="media-left">
+                                                <a href="booking-list.html#">
+
+                                                    <img src="{{ modele.user.photoProfil }}" alt="User Image">
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading">{{ modele.user.username }} <span class="
+                                        {% if modele.feeling == "loved" %}
+                                        label label-danger
+                                        {% elseif modele.feeling == "sad" %}
+                                        label label-warning
+                                        {% else %}
+                                        label label-info
+                                        {% endif %}"> {{ modele.feeling }} </span></h4>
+                                                <div class="booking-list ">Posted at: <span class="highlight bg-warning">{{ modele.datePublication|date }}</span></div>
+                                                <div class="booking-list ">Post: <span class="highlight bg-warning">{{ modele.contenu }}</span></div>
+                                                <div class="booking-list"><span class="" ><img src="{{ modele.image }}" height="300" width="350"></span></div><br>
+
+
+
+                                                {% if (modele.aviss | autorisation(app.user.id))== false %}
+                                                    <a href="{{ path('like_publication',{'id':modele.id}) }}" style="color: #00c9ff"><b>Like</b></a>
+                                                {% elseif (modele.aviss | autorisation(app.user.id))== true %}
+                                                    <a href="{{ path('dislike_publication',{'id':modele.id }) }} " style="color: #9d9d9d">Dislike </a><br>
+                                                {% endif %}
+                                                <br>
+                                                <div class="booking-list"><span class="highlight bg-warning" >{{ modele.like }} Likes </span></div>
+
+
+
+                                                <a href="#" class="openModal btn btn-primary btn-block" aria-describedby="basic-addon2" id="{{ modele.id }}">
+                                                    <i class="fa fa-reply" aria-hidden="true">
+                                                    </i>
+                                                    Repondre
+                                                </a>
+
+                                            </div>
+                                            {% if app.user.id == modele.user.id %}
+                                                <div class="right-btn">
+                                                    <a href="{{ path('PublicationFront_supprimer',{'id': modele.id}) }}" class="btn btn-primary cancel">
+                                                        <i class="fa fa-eraser"></i>
+                                                        Supprimer
+                                                    </a>
+
+
+
+                                                    <br><br>
+                                                    <a href="{{ path('ModifierPublication', {'id':modele.id }) }}" class="btn btn-primary cancel" >
+                                                        <i class="fa fa-pencil-square" aria-hidden="true">
+
+
+                                                        </i>
+
+
+                                                        Modifier
+
+
+                                                    </a>
+                                                </div>
+                                            {% else %}
+                                                <div class="right-btn">
+                                                    <a href="#" class="" data-toggle="modal" data-target="#ModalSignaler" >Signaler</a>
+
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <!-- Modal pour signaler -->
+
+                                    <div class="modal fade" id="ModalSignaler">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" style="color: red">Signaler Publication</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <form method="post" action="">
+                                                        <input type="hidden" value="true" name="signalerPublication" class="form-control">
+                                                        <select class="form-control" id="typeSignalerPublication{{ modele.id }}" name="type">
+                                                            <option value="Spam"> Spam </option>
+                                                            <option value="sexually explicit"> sexually explicit </option>
+                                                            <option value="harassment"> harassment </option>
+                                                            <option value="Violent"> Violent </option>
+                                                        </select> <br>
+                                                        <label class="">Votre message :</label>
+                                                        <br><input id="messageSignalerPublication{{ modele.id }}" name="message" type="text" class="form-control" placeholder="Rediger un rapport" >
+                                                        <br>
+                                                        <input id="idPublicationSignalerPublication{{ modele.id }}" type="hidden" name="publication" value="{{ modele.id }} ">
+                                                        <button type="submit" class="btn btn-primary btn-block signalerBouton" id="{{ modele.id }}"> Envoyer ! </button>
+                                                    </form>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <!-- fin du modal -->
+                            {% endfor %}
+                            <div class="navigation text-center" >
+                                {{ knp_pagination_render(modeles) }}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                    <!-- Modal //////// post -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            {{ form_start(form) }}
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title"><b>Make Post</b></h4>
+                                </div>
+                                <div class="modal-body">
+                                    {{ form_label(form.feeling) }}
+                                    {{ form_widget(form.feeling) }}
+                                    {{ form_widget(form.contenu, {'attr': {'class':'form-control','placeholder':'What is in your mind' }}) }} <br>
+                                    <div class="profileIntro paraMargin">
+
+                                        <div class="row">
+                                            <div class="form-group col-xs-12">
+                                                <div class="imageUploader text-center">
+                                                    <div class="file-upload">
+                                                        <div class="upload-area">
+                                                            {{ form_label(form.image) }}
+                                                            {{ form_widget(form.image) }}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="modal-footer">
+
+                                    <button type="submit" class="btn btn-primary btn-block">Post</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+
+
+                    <!-- fin du modal -->
+
+                    {% for modele in modeles %}
+
+
+                        <div id="myModal{{ modele.id }}" class="modal fade bd-example-modal-lg" role="dialog">
+                            <div class="modal-dialog">
+                                {{ form_start(form) }}
+                                <!-- Modal content-->
+                                <div class="modal-content">
+
+                                    <div class="modal-body">
+
+                                        <div class="single-list">
+                                            <div class="media booking-list-media">
+                                                <div class="media-left">
+                                                    <a href="booking-list.html#">
+
+                                                        <img src="{{ modele.user.photoProfil }}" alt="User Image">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+
+                                                    <h4 class="media-heading">{{ modele.user }} <span class="
+                                                    {% if modele.feeling == "loved"  %}
+                                                    label label-primary
+                                                    {% elseif  modele.feeling  == "sad" %}
+                                                    label label-primary
+                                                    {% else %}
+                                                    label label-success
+                                                {% endif %}">{{ modele.feeling }}</span></h4>
+                                                    <div class="booking-list ">Posted at: <span class="highlight bg-warning">{{ modele.datePublication|date }}</span></div>
+                                                    <div class="booking-list"><span class="highlight bg-warning" >{{ modele.contenu }}</span></div>
+                                                    <div class="booking-list"><span class="highlight bg-warning" ><img src="{{ modele.image }}"></span></div>
+                                                    <br>
+                                                    <div class="booking-list"><span class="highlight bg-warning" >{{ modele.like }} Likes </span></div> <br> <br>
+                                                    <hr>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div id="commentairee">
+                                                <h3>Commentaires : </h3>
+                                                {% for commentaire in modele.commentaires %}
+                                                    <div id="commentaire{{ commentaire.id }}">
+                                                        <b><u>{{ commentaire.user.username }}</u></b> commented on
+                                                        <i>{{ commentaire.dateCommentaire | date }} <b>:</b> </i>
+                                                        <span id="com{{ commentaire.id }}" class="comment">{{ commentaire.contenu }}</span>
+                                                        {% if app.user.id == commentaire.user.id %}
+                                                            <!--
+                                                <input class="modif form-control" type="text" id="modifiedComment{{ commentaire.id }}" value="{{ commentaire.contenu }}" style="display: none" >
+                                                -->
+                                                            <span class="right-btn">
+                                                    <a data-toggle="tooltip2" title="Modifier Commentaire" data-placement="right" href="#" onclick="editCommentaire({{ commentaire.id }},{{ modele.id }})">M</a> <b> - </b>
+                                                    <a data-toggle="tooltip" title="Supprimer Commentaire" href="{{ path('Commentaire_supprimer',{'id': commentaire.id}) }}" >X</a>
+
+
+                                                </span>
+
+                                                        {% endif %}
+                                                    </div>
+                                                    <br>
+                                                {% endfor %}
+                                            </div>
+                                            <br>
+                                            <div id="formAjout{{ modele.id }}">
+                                                <form method="post" action="{{ path('forum_homepage') }}">
+                                                    <input type="hidden" value="true" name="ajoutcmt">
+                                                    <input id="comment{{ modele.id }}" type="text" name="commentaire" placeholder="Commentez ici !" class="form-control">
+
+                                                    <br>
+                                                    <input type="hidden" name="publication" value="{{ modele.id }} ">
+
+                                                    <button type="submit" class="btn btn-primary btn-block edit" > Commentez </button>
+                                                </form>
+                                            </div>
+                                            <div id="modifCommentaire{{ modele.id }}" style="display: none">
+                                                <input type="text" class="form-control" id="modifInput{{ modele.id }}" > <br>
+                                                <a href="#" class="btn btn-primary btn-block edit editerCommentaire"  onclick="return send({{ modele.id }})"> Modifier </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- fin du deuxieme modal -->
+                        </div>
+
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        $(document).ready(function(){
+            $('[data-toggle="tooltip2"]').tooltip();
+        });
+
+        $(".openModal").click(function (e) {
+            var id = e.currentTarget.id
+            $("#myModal" + id).modal();
+        }) ;
+
+
+
+
+
+
+        function editCommentaire(commId,modelId) {
+            $("#modifCommentaire"+modelId).show();
+            $("#formAjout"+modelId).hide();
+            $("#commentaire"+commId).hide();
+            $("#modifInput"+modelId).val($("#com"+commId).html());
+            $(".editerCommentaire").attr("id",commId);
+
+        }
+
+
+
+        function send(modelId) {
+            $(".formMessage").submit(function (e) {
+                e.preventDefault();
+            })
+            var id = $(".editerCommentaire").attr("id");
+            var contenu =  $("#modifInput" + modelId).val();
+            $.ajax({
+                url: "{{  path('ModifierCommentaire') }}",
+                dataType:'text',
+                type:'POST',
+                data:{
+                    'id' : id,
+                    'contenu':contenu
+                },
+                success: function(result){
+                    console.log(contenu);
+                    $("#com"+result).html(contenu);
+                    $("#commentaire"+result).show();
+
+                    $("#modifCommentaire"+modelId).hide();
+                    $("#formAjout"+modelId).show();
+                }});
+
+            return false;
+        }
+        $(".signalerBouton").click(function() {
+            id = $(this).attr("id");
+            type = $("#typeSignalerPublication"+id).val();
+            message = $("#messageSignalerPublication"+id).val();
+            $.ajax({
+                url: '{{ path('reclamation_publication') }}',
+                method: "POST",
+                data: { 'message' : message , 'type' : type , 'publication' : id, 'signalerPublication':true },
+            }).done(function() {
+                console.log('done ! ');
+            });
+            return false;
+        })
+
+    </script>
+{% endblock %}

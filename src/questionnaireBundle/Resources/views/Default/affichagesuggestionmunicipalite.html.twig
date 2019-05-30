@@ -1,0 +1,37 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <section class="clearfix bg-dark dashboardOrders">
+        <div class="container">
+            <h2 >Mes solution</h2>
+            <div class="row">
+                {% for suggestion in sg %}
+                <div class="post post-boxed">
+                    <div class="post-image">
+                        <img src="{{ asset(suggestion.Probleme.image) }}" alt="A Clockwork Origin">
+                    </div><!-- /.post-image -->
+
+                    <div class="post-content">
+                        <h2><a href="blog-detail.html">{{ suggestion.titre }}</a><a></a></h2><a>
+                            <p>{{ suggestion.description }}</p>
+                        </a>
+                    </div><!-- /.post-content --><a>
+
+                    </a><div class="post-meta clearfix"><a>
+                        </a><div class="post-meta-author"><a>Par </a><a href="blog-detail.html">{{ suggestion.Probleme.idUser.nom }}</a></div><!-- /.post-meta-author -->
+                        <div class="post-meta-date">Vote ouvert de {{ suggestion.getDateDebut()|date }} Jusqu'a {{ suggestion.getDateFin()|date }}</div><!-- /.post-meta-date -->
+                        <div class="post-meta-more"><a href='javascript:popup("{{ path('sondage_resultat',{'id':suggestion.id}) }}")'class="btn btn-warning" >Voir résultat du vote<i class="fa fa-tags"></i></a></div><!-- /.post-meta-categories -->
+                    </div><!-- /.post-meta -->
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block js %}
+    <script>
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}

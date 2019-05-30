@@ -1,0 +1,59 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <div class="page-title">
+                                <h1>Inscription</h1>
+                            </div><!-- /.page-title -->
+
+                            {{ form_start(form) }}
+                                <div class="form-group">
+                                    <label for="login-form-email">E-mail</label>
+                                    {{ form_widget(form.email) }}
+                                </div><!-- /.form-group -->
+
+                                <div class="form-group">
+                                    <label for="login-form-first-name">Nom</label>
+                                    {{ form_widget(form.nom) }}
+                                </div><!-- /.form-group -->
+
+                                <div class="form-group">
+                                    <label for="login-form-last-name">Prénom</label>
+                                    {{ form_widget(form.prenom) }}
+                                </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="login-form-password">Téléphone</label>
+                                {{ form_widget(form.telephone) }}
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="login-form-password">CIN</label>
+                                {{ form_widget(form.cin) }}
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label for="login-form-password">Username</label>
+                                {{ form_widget(form.username) }}
+                            </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="login-form-password">Mot de passe</label>
+                                    {{ form_widget(form.plainPassword.first) }}
+                                </div><!-- /.form-group -->
+
+                                <div class="form-group">
+                                    <label for="login-form-password-retype">Répéter mot de passe</label>
+                                    {{ form_widget(form.plainPassword.second) }}
+                                </div><!-- /.form-group -->
+
+                                {{ form_widget(form.Enregistrer) }}
+                            {{ form_end(form) }}
+                        </div><!-- /.col-sm-4 -->
+                    </div><!-- /.row -->
+
+                </div><!-- /.content -->
+            </div><!-- /.container -->
+        </div><!-- /.main-inner -->
+    </div><!-- /.main -->
+{% endblock %}

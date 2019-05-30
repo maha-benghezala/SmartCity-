@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/libraries/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/libraries/owl.carousel/assets/owl.carousel.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('assets/libraries/colorbox/example1/colorbox.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('assets/libraries/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/libraries/bootstrap-fileinput/fileinput.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/superlist.css') }}" rel="stylesheet" type="text/css" >
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/favicon.png') }}">
+
+    <title>Smart Municipality</title>
+</head>
+
+
+<body class="">
+
+<div class="page-wrapper">
+
+    <header class="header header-transparent">
+        <div class="header-wrapper">
+            <div class="container">
+                <div class="header-inner">
+                    <div class="header-logo">
+                        <a href="index.html">
+                            <img src="{{ asset('assets/img/logo-white.png') }}" alt="Logo">
+                            <span>Smart Municipality</span>
+                        </a>
+                    </div><!-- /.header-logo -->
+
+                    <div class="header-content">
+                        <div class="header-bottom">
+                            <div class="header-action">
+                                <a href="listing-submit.html" class="header-action-inner" title="Add Listing" data-toggle="tooltip" data-placement="bottom">
+                                    <i class="fa fa-plus"></i>
+                                </a><!-- /.header-action-inner -->
+                            </div><!-- /.header-action -->
+
+                            <ul class="header-nav-primary nav nav-pills collapse navbar-collapse">
+                                <li class="active">
+                                    <a href="#">Accéder au site <i class="fa fa-chevron-down"></i></a>
+
+                                    <ul class="sub-menu">
+                                        <li><a href="{{ path('inscription') }}">Inscription</a></li>
+                                        <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- /.header-bottom -->
+                    </div><!-- /.header-content -->
+                </div><!-- /.header-inner -->
+            </div><!-- /.container -->
+        </div><!-- /.header-wrapper -->
+    </header><!-- /.header -->
+    <div class="main">
+        <div class="main-inner">
+            <div class="content">
+                <div class="mt-150">
+                    <div class="hero-image">
+                        <div class="hero-image-inner" style="background-image: url('{{ asset('assets/img/tmp/slider-large-3.jpg') }}');">
+                            <div class="hero-image-content">
+                                <div class="container">
+                                    <h1>Smart Municipality</h1>
+                                    <p>  Nous te souhaite la bienvenue parmi nous.<br>
+                                        Nous sommes très content de t'accueillir aujourd'hui et Nous espèrons que tu te plairas ici.<br>
+                                        N'hésite pas à nous contacter si tu as besoin de quoi que ce soit, Nous nous ferons un plaisir de t'apporter nous aide.<br>
+                                        Encore bienvenu ! </p>
+                                    <a href="{{ path('inscription') }}" class="btn btn-primary btn-lg">Inscription</a>
+                                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-secondary btn-lg">Se connecter</a>
+                                </div><!-- /.container -->
+                            </div><!-- /.hero-image-content -->
+                        </div><!-- /.hero-image-inner -->
+                    </div><!-- /.hero-image -->
+                </div>
+            </div><!-- /.content -->
+            {% block section %}
+            {% endblock %}<!-- /.content -->
+        </div><!-- /.main-inner -->
+    </div><!-- /.main -->
+
+    <footer class="footer">
+
+
+
+    </footer><!-- /.footer -->
+
+</div><!-- /.page-wrapper -->
+
+<script src="{{ asset('assets/js/jquery.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/js/map.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/libraries/bootstrap-sass/javascripts/bootstrap/collapse.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/libraries/bootstrap-sass/javascripts/bootstrap/carousel.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/libraries/bootstrap-sass/javascripts/bootstrap/transition.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/libraries/bootstrap-sass/javascripts/bootstrap/dropdown.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/libraries/bootstrap-sass/javascripts/bootstrap/tooltip.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/libraries/bootstrap-sass/javascripts/bootstrap/tab.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/libraries/bootstrap-sass/javascripts/bootstrap/alert.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/libraries/colorbox/jquery.colorbox-min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/libraries/flot/jquery.flot.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/libraries/flot/jquery.flot.spline.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('assets/libraries/bootstrap-select/bootstrap-select.min.js') }}" type="text/javascript"></script>
+
+<script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing" type="text/javascript"></script>
+
+<script type="text/javascript" src="{{ asset('assets/libraries/jquery-google-map/infobox.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/libraries/jquery-google-map/markerclusterer.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/libraries/jquery-google-map/jquery-google-map.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('assets/libraries/owl.carousel/owl.carousel.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/libraries/bootstrap-fileinput/fileinput.min.js') }}"></script>
+
+<script src="{{ asset('assets/js/superlist.js') }}" type="text/javascript"></script>
+{% block js %}
+{% endblock %}
+
+</body>
+</html>

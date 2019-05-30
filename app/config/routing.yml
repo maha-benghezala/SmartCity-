@@ -1,0 +1,22 @@
+forum:
+    resource: "@ForumBundle/Resources/config/routing.yml"
+    prefix:   /
+
+questionnaire:
+    resource: "@questionnaireBundle/Resources/config/routing.yml"
+    prefix:   /
+
+sondage:
+    resource: "@sondageBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+test:
+    resource: "@testBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

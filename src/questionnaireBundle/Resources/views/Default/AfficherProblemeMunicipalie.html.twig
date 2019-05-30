@@ -1,0 +1,78 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <section class="clearfix bg-dark dashboardOrders">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                     <br>
+
+                    <h2>Mes Problemes</h2>
+                            <div class="table-responsive"  data-pattern="priority-columns">
+                                <div class="background-white p20 mb50">
+                        <table class="table listingsTable">
+                            <thead>
+                            <tr class="rowItem">
+                                <th data-priority="">Probleme</th>
+                                <th data-priority="5">Status</th>
+                                <th data-priority="5">Gérer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for propriete in probleme %}
+                                {% if propriete.idMunicipalite == app.user %}
+                                    <tr class="rowItem">
+                                        <td>
+                                            <ul class="list-inline listingsInfo">
+                                                <li><a href="#"><img src="{{ asset(propriete.image) }}" alt="Image Listings" height="80" width="80"></a></li>
+                                                <li>
+                                                    <h3>{{ propriete.titre }} <i class="fa fa-check-circle" aria-hidden="true"></i></h3>
+                                                    <h5>{{ propriete.getDate|date }} </h5>
+                                                    <span class="category">{{ propriete.description }}</span>
+                                                    {% if propriete.video != null %}
+                                                    <p><span class="likeArea"><i class="fa fa-heart-o" aria-hidden="true"></i><a href='javascript:popup("http://127.0.0.1:8000/{{ propriete.video }}")'>Voir le video</a> </span></p>
+                                                    {% endif %}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <br>
+                                        {% if propriete.statut == 0 %}
+                                            <td><span class="label label-warning">Non résolu</span></td>
+                                        {% endif %}
+                                        {% if propriete.statut == 1 %}
+                                            <td><span class="label label-success">Résolu</span></td>
+                                        {% endif %}
+                                        <td>
+                                          <br>
+                                            <br>
+                                            <a href="{{ path('Solution',{'id':propriete.id}) }}" class="btn btn-primary btn-block">Ajouter une Solution</a>
+                                            <br>
+                                            <a href='javascript:popup("http://127.0.0.1:8000/voir/{{ propriete.id }}")'><button type="button" class="btn btn-warning btn-block">Voir</button></a>
+                                            <br>
+                                            {% if propriete.statut == 0 %}
+                                            <a href="{{ path('historique',{'id':propriete.id}) }}" class="btn btn-primary btn-block">Marquez comme résolu</a>
+                                                <br>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                             {% endif %}
+                               {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        alert("Vous aves "+{{ nombre }} + " problemes");
+    </script>
+{% endblock %}
+{% block js %}
+    <script>
+
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}

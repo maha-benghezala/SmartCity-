@@ -1,0 +1,75 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <br>
+    <section class="clearfix bg-dark dashboardOrders">
+	<div class="container">
+
+		<div class="row">
+
+            <h2>Problèmes</h2>
+
+    <div class="col-xs-12">
+        <div class="background-white p20 mb50">
+            <div class="table-responsive"  data-pattern="priority-columns">
+                <table class="table listingsTable">
+                <thead>
+                <tr>
+                    <th data-priority="">Titre</th>
+                    <th data-priority="2">Description</th>
+                    <th data-priority="6">Image</th>
+                    <th data-priority="2">Approuvement</th>
+                    <th data-priority="2">Statut</th>
+                    <th data-priority="2">Municipalite</th>
+                    <th data-priority="2">Manage</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for probleme in probleme %}
+                    <tr>
+                        <td>{{ probleme.titre }}</td>
+                        <td>{{ probleme.description }}</td>
+
+                        <td><img src="{{ asset(probleme.image) }}" height="40" width="40"></td>
+                        {% if probleme.enabled == 0 %}
+                            <td><span class="label label-warning">En attente</span></td>
+                        {% endif %}
+                        {% if probleme.enabled == 1 %}
+                            <td><span class="label label-success">Approuvée</span></td>
+                        {% endif %}
+                        {% if probleme.statut == 0 %}
+                            <td><span class="label label-danger">non Résolu</span></td>
+                        {% endif %}
+                        {% if probleme.statut == 1 %}
+                            <td><span class="label label-success">Résolu</span></td>
+                        {% endif %}
+                        <td>{{ probleme.idMunicipalite.nom }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href='javascript:popup("http://127.0.0.1:8000/voir/{{ probleme.id }}")'><button type="button" class="btn btn-primary">Voir</button></a>
+                                {% if probleme.enabled == 0 %}
+                                <a href="{{ path('Approuver_Probleme_admin',{'id':probleme.id}) }}"><button type="button" class="btn btn-warning">Approuver</button></a>
+                                {% endif %}
+                                <a href="{{ path('delete_probleme',{'id':probleme.id}) }}"><button type="button" class="btn btn-danger">Supprimer</button></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </div>
+        </div>
+
+    </div>
+    </section>
+
+{% endblock %}
+{% block js %}
+    <script>
+
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}

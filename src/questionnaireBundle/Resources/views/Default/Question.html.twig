@@ -1,0 +1,79 @@
+{% extends('base.html.twig') %}
+{% block section %}
+        {{ form_start(form) }}
+        <section class="clearfix bg-dark listingSection">
+            <div class="content-admin-main-inner">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-xs-12">
+                                <h2>Ajouter une suggestion</h2>
+                        <div class="background-white p20 mb50">
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        {{ form_label(form.question)}}
+                                        {{ form_widget(form.question)}}
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        {{ form_label(form.titre)}}
+                                        {{ form_widget(form.titre)}}
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        {{ form_label(form.description)}}
+                                        {{ form_widget(form.description)}}
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        {{ form_label(form.choix1)}}
+                                        {{ form_widget(form.choix1)}}
+                                    </div>
+                                    <div class="form-group col-sm-6" id="type2" style="display: none">
+                                        {{ form_label(form.choix2)}}
+                                        {{ form_widget(form.choix2)}}
+                                    </div>
+                                    <div class="form-group col-sm-6" id="type3" style="display: none">
+                                        {{ form_label(form.choix3)}}
+                                        {{ form_widget(form.choix3)}}
+                                    </div>
+                                    <div class="form-group col-sm-6" id="type4" style="display: none">
+                                        {{ form_label(form.choix4)}}
+                                        {{ form_widget(form.choix4)}}
+                                    </div>
+                                    <div class="header-action">
+                                        <a href="#" id="bouton" class="header-action-inner" title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Ajouter choix">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        <div class="form-footer text-center">
+                            {{ form_widget(form.valider)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+        {{ form_end(form) }}
+{% endblock %}
+{% block js %}
+    <script>
+        var i = 1 ;
+        $('#bouton').click(function () {
+            if (i = 1) {
+                $('#questionnairebundle_question_choix2').show();
+                $('#type2').show();
+                i = i + 1;
+                $('#bouton').click(function () {
+                    $('#questionnairebundle_question_choix3').show();
+                    $('#type3').show();
+                    $('#bouton').click(function () {
+                        $('#questionnairebundle_question_choix4').show();
+                        $('#type4').show();
+                    });
+                });
+
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <section class="clearfix bg-dark listyPage">
+        <div class="content-admin-main-inner">
+            <div class="container">
+                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="dashboardPageTitle">
+                                            <h2>Historique</h2>
+                                        </div>
+                                        <div class="background-white p20 mb50">
+                                            <div class="table-responsive"  data-pattern="priority-columns">
+                                                <table class="table listingsTable">
+                                <thead>
+                            <tr>
+                    <th data-priority="">Titre de probleme</th>
+                    <th data-priority="2">Description</th>
+                    <th data-priority="6">Date debut</th>
+                    <th data-priority="2">Date Fin</th>
+                    <th data-priority="2">Municipalité</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for historique in Probleme %}
+                    <tr>
+                        <td>{{ historique.Probleme.titre }}</td>
+                        <td>{{ historique.description }}</td>
+                        <td>{{ historique.getDateDebut()|date}}</td>
+                        <td>{{ historique.getDateFin()|date }}</td>
+                        <td>{{ historique.idMunicipalite.nom }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+
+{% endblock %}
+{% block js %}
+    <script>
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+
+        }
+    </script>
+
+{% endblock %}

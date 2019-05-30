@@ -1,0 +1,44 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <div class="col-xs-12">
+        <div class="table-responsive bgAdd"  data-pattern="priority-columns">
+            <table id="ordersTable" class="table table-small-font table-bordered table-striped" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th data-priority="">Titre</th>
+                    <th data-priority="2">Description</th>
+                    <th data-priority="6">Image</th>
+                    <th data-priority="2">Manage</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for probleme in robleme %}
+                    <tr>
+                        <td>{{ probleme.titre }}</td>
+                        <td>{{ probleme.description }}</td>
+
+                        <td><img src="{{ asset(probleme.image) }}" height="40" width="40"></td>
+                        <td>
+                            <div class="btn-group">
+                                <a href='javascript:popup("http://127.0.0.1:8000/voir/{{ probleme.id }}")'><button type="button" class="btn btn-primary">Voir</button></a>
+                                <a href="{{ path('Approuver_Probleme_admin',{'id':probleme.id}) }}"><button type="button" class="btn btn-primary">Voir Historique</button></a>
+                                <a href="{{ path('delete_probleme',{'id':probleme.id}) }}"><button type="button" class="btn btn-primary">Supprimer</button></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+
+    <script>
+
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}

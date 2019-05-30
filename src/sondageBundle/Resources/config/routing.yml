@@ -1,0 +1,6 @@
+sondage_homepage:
+    path:     /suggerer/{id}
+    defaults: { _controller: sondageBundle:Default:sondage}
+sondage_resultat:
+    path:     /suggerer/resultat/{id}
+    defaults: { _controller: sondageBundle:Default:getVote}

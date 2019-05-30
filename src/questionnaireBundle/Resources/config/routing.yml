@@ -1,0 +1,138 @@
+Ajouter_Probleme:
+    path:     /ajoutprobleme
+    defaults: { _controller: questionnaireBundle:Default:ajoutprobleme }
+Afficher_Probleme_admin:
+    path:     /admin/afficherprobleme
+    defaults: { _controller: questionnaireBundle:Default:AfficherProblemeAdmin }
+Approuver_Probleme_admin:
+    path:     /admin/approuverprobleme/{id}
+    defaults: { _controller: questionnaireBundle:Default:ApprouverProbleme }
+Afficher_Probleme_municipalite:
+    path:     /municipalite/afficherprobleme
+    defaults: { _controller: questionnaireBundle:Default:AfficherProblemeMunicipalite }
+Ajouter_Suggestion:
+    path:     /ajoutsuggestion
+    defaults: { _controller: questionnaireBundle:Default:ajouterSuggestion }
+Afficher_Probleme_user:
+     path:     /user/afficherprobleme
+     defaults: { _controller: questionnaireBundle:Default:afficherProblemeUser }
+Probleme:
+     path:     /probleme
+     defaults: { _controller: questionnaireBundle:Default:showProbleme }
+afficher_municipalite:
+     path:     /user/afficherMunicipalite
+     defaults: { _controller: questionnaireBundle:Default:afficherMunicipalite }
+abonner:
+     path:     /user/abonner/{id}
+     defaults: { _controller: questionnaireBundle:Default:abonner }
+afficher_Suggestion_User:
+     path:     /user/afficherSuggestion
+     defaults: { _controller: questionnaireBundle:Default:showSuggestionUser }
+show_problemeJSON:
+     path:     /ProblemeJSON
+     defaults: { _controller: questionnaireBundle:Default:showProblemeUserJson }
+show_suggestionJSON:
+     path:     /suggestionJSON
+     defaults: { _controller: questionnaireBundle:Default:showSuggestionUserJson }
+Suggestion:
+     path:     /suggestion
+     defaults: { _controller: questionnaireBundle:Default:showSuggesstion }
+probleme_seule:
+     path:     /probleme/seule/{id}
+     defaults: { _controller: questionnaireBundle:Default:afficherProblemeSingle }
+Municipalite:
+     path:     /Municipalite
+     defaults: { _controller: questionnaireBundle:Default:showMunicipalite }
+delete_probleme:
+     path:     /delete/{id}
+     defaults: { _controller: questionnaireBundle:Default:delete }
+voir_probleme:
+     path:     /voir/{id}
+     defaults: { _controller: questionnaireBundle:Default:voir }
+consultersuggestion_suggestion:
+     path:     /consultersuggestion
+     defaults: { _controller: questionnaireBundle:Default:consultersuggestion }
+historique:
+     path:     /historique/{id}
+     defaults: { _controller: questionnaireBundle:Default:ajouterHistorique }
+statut:
+     path:     /statut
+     defaults: { _controller: questionnaireBundle:Default:statutProbleme }
+afficher_historique:
+     path:     /afficherhistorique
+     defaults: { _controller: questionnaireBundle:Default:voirHistorique }
+Rapport:
+     path:     /Rapport/{id}
+     defaults: { _controller: questionnaireBundle:Default:Rapport }
+Solution:
+     path:     /Solution/{id}
+     defaults: { _controller: questionnaireBundle:Default:ajouterSolution }
+Question:
+     path:     /question
+     defaults: { _controller: questionnaireBundle:Default:ajouterQuestionnaire }
+Afficher_suggestion_municipalite:
+     path:     /affichersuggestionmunicipalite
+     defaults: { _controller: questionnaireBundle:Default:afficherSuggestionMunicipalite }
+Afficher_question:
+     path:     /afficherquestion
+     defaults: { _controller: questionnaireBundle:Default:afficherQuestionnaire }
+Question_app:
+     path:     /app/{id}/{userid}
+     defaults: { _controller: questionnaireBundle:Default:question }
+avis:
+    path:     /avis/{id}/{userid}
+    defaults: { _controller: questionnaireBundle:Default:ajouterAvis}
+Afficher_avis:
+    path:     /afficheravis/{id}
+    defaults: { _controller: questionnaireBundle:Default:afficherAvis}
+Affiche_Municipalite:
+    path:     /affichemunicipalite
+    defaults: { _controller: testBundle:Default:afficherMunicipaliteAdmin}
+DAshboard_Admin:
+    path:     /admin/deashboard
+    defaults: { _controller: questionnaireBundle:Default:dashboardAdmin}
+Ajouter_actualite:
+    path:     /ajouteractualite
+    defaults: { _controller: questionnaireBundle:Default:ajouteractualite}
+Afficher_actualite:
+    path:     /afficheactualite
+    defaults: { _controller: questionnaireBundle:Default:AfficherToutActualite}
+Afficher_question_municipalite:
+    path:     /afficherquestionMunicipalite
+    defaults: { _controller: questionnaireBundle:Default:SuggestionMunicipalite}
+404:
+    path:     /404
+    defaults: { _controller: questionnaireBundle:Default:error}
+afficher_question_admin:
+    path:     /admin/question
+    defaults: { _controller: questionnaireBundle:Default:afficherQuestionAdmin }
+search_historique:
+    path:     /admin/historique
+    defaults: { _controller: questionnaireBundle:Default:search }
+DAshboard_Municipalite:
+    path:     /municipalite/deashboard
+    defaults: { _controller: questionnaireBundle:Default:dashboardMun}
+suupprimer:
+    path:     /supprimer/{id}
+    defaults: { _controller: questionnaireBundle:Default:deleteSuggestion}
+actualite_municipalite:
+    path:     /municipalite/actualite
+    defaults: { _controller: questionnaireBundle:Default:AfficherToutActualiteMunicipalite}
+supprimer:
+    path:     /supprimeractualite/{id}
+    defaults: { _controller: questionnaireBundle:Default:deleteActualiteMunicipalite}
+del:
+    path:     /supprimersugg/{id}
+    defaults: { _controller: questionnaireBundle:Default:deletedashadmin}
+bannir_Probleme:
+    path:     /admin/bannir/{id}
+    defaults: { _controller: questionnaireBundle:Default:bannirProbleme}
+supprimer_Solution:
+    path:     /admin/deleteSolution/{id}
+    defaults: { _controller: questionnaireBundle:Default:deleteSolution}
+bannir_user:
+    path:     /admin/bannirUser/{id}
+    defaults: { _controller: questionnaireBundle:Default:bannirUser}
+approuver_user:
+    path:     /admin/approuverUser/{id}
+    defaults: { _controller: questionnaireBundle:Default:approuverUser}

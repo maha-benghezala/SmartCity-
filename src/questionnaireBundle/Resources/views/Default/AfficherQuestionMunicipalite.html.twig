@@ -1,0 +1,40 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <section class="clearfix bg-dark dashboardOrders">
+            <div class="container">
+                    <h3>Mes Suggestions</h3>
+
+        {% for q in question %}
+                <div class="card-row">
+                    <div class="post post-boxed">
+                                    <div class="post-content">
+                                        <h2><a href="#">{{ q.titre }}</a></h2><a>
+                                            <a href="#">{{ q.question }} ?</a>
+                                            <p>{{ q.description }}</p>
+                                        </a>
+                                    </div><!-- /.post-content --><a>
+
+                                    </a><div class="post-meta clearfix"><a>
+                                        <div class="post-meta-date">{{ q.getDate()|date }}</div><!-- /.post-meta-date -->
+                                <div class="post-meta-more"><a href='javascript:popup("http://127.0.0.1:8000/afficheravis/{{ q.id }}")' class="btn btn-warning">voir les résultats<i class="fa fa-chevron-right"></i></a></div><!-- /.post-meta-more -->
+                                            <div class="post-meta-more"><a href="{{ path('suupprimer',{'id':q.id}) }}" class="btn btn-danger">Supprimer<i class="fa fa-remove"></i></a></div><!-- /.post-meta-more -->
+                                        </a>
+                                    </div><!-- /.post-meta -->
+                                </div>
+                </div>
+                     {% endfor %}
+                </div>
+
+
+
+
+
+    </section>
+{% endblock %}
+{% block js %}
+    <script>
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}

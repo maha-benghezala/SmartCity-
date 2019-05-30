@@ -1,0 +1,177 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <br>
+    <br>
+
+
+    <!-- CATEGORY GRID SECTION -->
+    <div class="cards-row">
+
+        <div class="card-row">
+            <div class="card-row-inner">
+                        {% for municipalite in municipalite %}
+                            {% for x in municipalite.Roles %}
+                                {% if x == "ROLE_MUNICIPALITE" %}
+                        <div class="card-row-inner">
+                            <div class="card-row-image" data-background-image="{{ asset(municipalite.image) }}" style="background-image: url({{ asset(municipalite.image) }});">
+                                <div class="card-row-label"><a href="listing-detail.html">{{ municipalite.telephone }}</a></div><!-- /.card-row-label -->
+
+                                <div class="card-row-price">{{ municipalite.email }}</div><!-- -->
+
+                            </div><!-- /.card-row-image -->
+
+                            <div class="card-row-body">
+                                <h2 class="card-row-title"><a href="listing-detail.html">{{ municipalite.nom }}</a></h2>
+                                <div class="card-row-content"><p>{{ municipalite.description }}</p>
+                                    <p><span>Adresse : <h3>{{ municipalite.adresse }}</h3></span></p></div><!-- /.card-row-content -->
+                            </div><!-- /.card-row-body -->
+
+                            <div class="card-row-properties">
+                                <dl>
+                                    <dd>S'abonner ?</dd>
+                                    <dt>
+                                        <div class="btn-group">
+                                            {% set a= false %}
+                                            {% if app.user %}
+                                                {% for abonnement in abonnement %}
+                                                    {% if  municipalite.id==abonnement.idMunicipalite.id and app.user==abonnement.idUser %}
+                                                        {% set a=true %}
+                                                        <li><a href="#">Abonnée</a></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% if a==false  %}
+                                                    <li><a href="{{ path('abonner',{'id':municipalite.id}) }}">S'abonner</a></li>
+                                                {% endif %}
+                                            {% endif %}
+                                            </ul>
+                                        </div>
+                                    </dt>
+                                    <dd>Abonnées</dd><dt>{{ municipalite.abonnements }}</dt>
+                                    {% set a = 0 %}
+                                    {% for probleme in probleme %}
+                                    {% if probleme.idMunicipalite.id == municipalite.id %}
+                                        {% set a = a+1 %}
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% set b = 0 %}
+                                    {% for solution in solution %}
+                                        {% if solution.idMunicipalite.id == municipalite.id %}
+                                            {% set b = b+1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% set c = 0 %}
+                                    {% for question in question %}
+                                        {% if question.idMunicipalite.id == municipalite.id %}
+                                            {% set c = c+1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <dd>Probleme résolu</dd><dt>{{ a }}</dt>
+                                    <dd>Solutions</dd><dt>{{ b }}</dt>
+                                    <dd>Suggestions</dd><dt>{{ c }}</dt>
+                                </dl>
+                            </div><!-- /.card-row-properties -->
+                        </div>
+
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+
+                </div>
+                    </div>
+                </div>
+    <br>
+    <div class="cards-row">
+
+        <div class="card-row">
+            <div class="card-row-inner">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+
+        }
+
+    </style>
+    <script>
+        // Note: This example requires that you consent to location sharing when
+        // prompted by your browser. If you see the error "The Geolocation service
+        // failed.", it means you probably did not give permission for the browser to
+        // locate you.
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 12
+            });
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var contentString = 'Voila ma position';
+                    {% for loc in municipalite %}
+                    {% for x in loc.Roles %}
+                    {% if x == "ROLE_MUNICIPALITE" %}
+                    var contentString{{ loc.id }} = '<h1>{{ loc.nom }}</h1><br>'+'Description: {{ loc.description }}<br>';
+                    var infowindow{{ loc.id }} = new google.maps.InfoWindow({
+                        content: contentString{{ loc.id }},
+                        maxWidth: 200
+                    });
+                    var marker{{ loc.id }} = new google.maps.Marker({
+                        position: {lat: {{ loc.latitude }}, lng: {{ loc.longitude}} },
+                        map: map,
+                        title: '{{ loc.nom }}'
+                    });
+                    marker{{ loc.id }}.addListener('click', function() {
+                        infowindow{{ loc.id }}.open(map, marker{{ loc.id }});
+                    });
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        maxWidth: 200
+                    });
+
+                    map.setCenter(pos);
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        title: 'Ma position'
+                    });
+                    marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                    });
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+        }
+
+    </script>
+    {% block js %}
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYy42R1JcZqt_UlmfQqBP6nlZt57aNJzs&callback=initMap">
+        </script>
+    {% endblock %}
+{% endblock %}

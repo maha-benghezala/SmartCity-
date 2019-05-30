@@ -1,0 +1,15 @@
+test_homepage:
+    path:     /
+    defaults: { _controller: testBundle:Default:index }
+logi:
+    path:     /contact
+    defaults: { _controller: testBundle:Default:contacts }
+ajouter_municipalite:
+    path:     /ajouter/municipalite
+    defaults: { _controller: testBundle:Default:ajouterMunicipalite }
+modifier:
+    path:     /modifier/{id}
+    defaults: { _controller: testBundle:Default:editMunicipalite }
+inscription:
+    path:     /inscription
+    defaults: { _controller: testBundle:Default:inscription }

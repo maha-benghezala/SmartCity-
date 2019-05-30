@@ -1,0 +1,58 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <section class="clearfix bg-dark listyPage">
+        <div class="content-admin-main-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="dashboardPageTitle">
+                            <h2>Liste de Municipalité</h2>
+                        </div>
+                        <div class="background-white p20 mb50">
+                            <div class="table-responsive"  data-pattern="priority-columns">
+                                <table class="table listingsTable">
+
+                                <thead>
+                            <tr>
+                                <th data-priority="">Nom</th>
+                                <th data-priority="">Email</th>
+                                <th data-priority="2">Adresse</th>
+                                <th data-priority="2">Dernier login</th>
+                                <th data-priority="2">Téléphone</th>
+                                <th data-priority="2">Options</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for t in tab %}
+                                {% for x in t.Roles %}
+                                    {% if x == "ROLE_MUNICIPALITE" %}
+                                <tr>
+                                    <td>{{ t.nom }}</td>
+                                    <td>{{ t.email }}</td>
+                                    <td>{{ t.adresse }}</td>
+                                    <td>{{ t.getLastLogin()|date }}</td>
+                                    <td>{{ t.telephone }}</td>
+                                    <td><div class="btn-group"> <a href='{{ path('modifier',{'id':t.id}) }}'><button type="button" class="btn btn-warning">Modifier</button></a>
+                                     <a href='#'><button type="button" class="btn btn-primary">Voir</button></a>
+                                            {% if t.enabled == 1 %}
+                                        <a href="{{ path('bannir_user',{'id':t.id}) }}"><button type="button" class="btn btn-danger">Bannir</button></a>
+                                        {% endif %}
+                                            {% if t.enabled == 0 %}
+                                            <a href="{{ path('approuver_user',{'id':t.id}) }}"><button type="button" class="btn btn-danger">approuver</button></a>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                        {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+{% endblock %}

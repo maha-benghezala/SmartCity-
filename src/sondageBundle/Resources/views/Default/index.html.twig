@@ -1,0 +1,19 @@
+<html>
+<titre>vote</titre>
+<body>
+{{ form_start(form) }}
+  <table>
+   <tr>
+       <td>{{ form_label(form.suggerer)}}</td>
+       <td>{{ form_widget(form.suggerer)}}</td>
+   </tr>
+      <tr>
+          <td>{{ form_label(form.vote)}}</td>
+          <td>{{ form_widget(form.vote)}}</td>
+      </tr>
+
+
+ </table>
+{{ form_end(form) }}
+</body>
+</html>

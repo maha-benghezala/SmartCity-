@@ -1,0 +1,83 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <section class="clearfix bg-dark listingSection">
+        <div class="content-admin-main-inner">
+    <div class="container">
+    <div class="row">
+    <div class="col-xs-12">
+        <div class="background-white p20 mb50">
+    <div class="dashboardBoxBg mb30">
+    <div class="profileIntro paraMargin">
+    <h3>Liste des choix</h3>
+    <div class="row">
+    {% for question in qq %}
+
+        {% if question.choix1 != null %}
+    <input type="radio" class="form-control" value="{{ question.choix1 }}" id="{{ question.choix1 }}"> <label for="{{ question.choix1 }}">{{ question.choix1 }} ?</label><br>
+            {% endif %}
+        {% if question.choix2 != null %}
+    <input type="radio"  class="form-control" value="{{ question.choix2 }}" id="{{ question.choix2 }}"> <label for="{{ question.choix2 }}">{{ question.choix2 }} ?</label><br>
+            {% endif %}
+        {% if question.choix3 != null %}
+    <input type="radio"   class="form-control" value="{{ question.choix3 }}" id="{{ question.choix3 }}"><label for="{{ question.choix3 }}">{{ question.choix3 }} ?</label><br>
+            {% endif %}
+        {% if question.choix4 != null %}
+    <input type="radio"  class="form-control" value="{{ question.choix4 }}" id="{{ question.choix4 }}"><label for="{{ question.choix4 }}">{{ question.choix4 }} ?</label><br>
+            {% endif %}
+        <br>
+        <input type="button" value="enregister" id="bouton"  class="btn btn-primary" style="align-items: right;">
+        {% endfor %}
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block js %}
+    <script>
+        {% for question in qq %}
+        var choix = null ;
+        var type=  null;
+        $('#{{ question.choix1 }}').click(function () {
+
+            choix =  $('#{{ question.choix1 }}').val();
+            type= "choix1";
+        });
+        $('#{{ question.choix2 }}').click(function () {
+            choix=$('#{{ question.choix2 }}').val();
+            type = "choix2"
+        });
+        $('#{{ question.choix3 }}').click(function () {
+            choix=$('#{{ question.choix3 }}').val();
+            type = "choix3"
+        });
+        $('#{{ question.choix4 }}').click(function () {
+            choix = $('#{{ question.choix4 }}').val();
+            type = "choix4"
+        });
+
+        $('#bouton').click(function () {
+            var param = {
+                "type" : type,
+                "choix" : choix
+            };
+            $.post("{{ path('avis',{'id':question.id,'userid':userid}) }}",param,function (data) {
+
+                if(data.toString() == "Success"){
+                    alert("Success");
+                    window.close();
+                }
+                else {
+                    alert("Echec");
+                    window.close();
+                }
+            });
+        });
+        {% endfor %}
+    </script>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends('base.html.twig') %}
+{% block section %}
+<div class="main">
+            <div class="container">
+                <h3>Liste des solutions</h3>
+                            <div class="cards-row">
+                                {% for suggestion in suggestion %}
+                                <div class="card-row">
+                                    <div class="card-row-inner">
+                                        <div class="card-row-image" data-background-image="{{ asset(suggestion.image) }}" style="background-image: url({{ asset(suggestion.image) }});">
+                                            <div class="card-row-label"><a href="listing-detail.html">{{ suggestion.titre }}</a></div><!-- /.card-row-label -->
+                                            <div class="card-row-price">{{ suggestion.getDateDebut()|date }}</div><!-- -->
+                                        </div><!-- /.card-row-image -->
+                                        <div class="card-row-body">
+                                            <h2 class="card-row-title"><a href="#">{{ suggestion.titre }}</a></h2>
+                                            <div class="card-row-content"><p>{{ suggestion.description }}</p></div><!-- /.card-row-content -->
+                                        </div><!-- /.card-row-body -->
+                                        <div class="card-row-properties">
+                                            <dl>
+                                                <dd>Publiée le </dd><dt>{{ suggestion.getDateDebut()|date }}</dt>
+                                                <dd>Par</dd><dt>{{ suggestion.idMunicipalite.nom }}</dt>
+                                                {% if suggestion.Probleme != null %}
+                                                <dd>Solution  sur la probleme : </dd><dt><a href="#">{{ suggestion.Probleme.titre }}</a> </dt>
+                                                {% endif %}
+                                                <dd>Vote :</dd>
+                                                <dt>
+                                                    <div class="card-row-rating">
+                                                        <a id="vote{{ suggestion.id }}" class="btn btn-primary">Donner votre vote<i class="fa fa-eye"></i></a>
+                                                    </div><!-- /.card-row-rating -->
+                                                </dt>
+                                            </dl>
+                                        </div><!-- /.card-row-properties -->
+                                    </div><!-- /.card-row-inner -->
+                                </div><!-- /.card-row -->
+                                {% endfor %}
+                            </div>
+
+                    {% for suggestion in suggestion %}
+                    <div id="dialog{{ suggestion.id }}" title="Vote" class="form-control" style="display: none">
+                        <div id="dialog-form">
+                            <p class="validateTips">Donner votre vote</p>
+                            <form>
+                                <fieldset>
+                                    <label for="name">Vote</label>
+                                    <select id="voter">
+                                        <option value="1">Oui</option>
+                                        <option value="2">Non</option>
+                                    </select><br><br>
+                                    <label for="email">Suggestion ?</label>
+                                    <input type="text" name="suggestion" id="suggestion" class="text ui-widget-content ui-corner-all"><br><br>
+                                    <input type="button" id="button{{ suggestion.id }}" class="btn btn-primary" value="enregistrer">
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    function popup(page) {
+        window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+    }
+    {% for suggestion in suggestion %}
+    $("#vote{{ suggestion.id }}").click(function (e) {
+        $("#dialog{{ suggestion.id }}").show().dialog();
+    });
+    $("#button{{ suggestion.id }}").click(function (e) {
+        var param = {
+            "vote" : $( "#voter option:selected" ).text(),
+            "suggestion" : $("#suggestion").val()
+        };
+        $.post("/suggerer/"+{{ suggestion.id }},param,function (data) {
+            if(status = "success"){
+                alert("Success");
+            }
+        });
+    });
+    {% endfor %}
+</script>
+{% endblock %}

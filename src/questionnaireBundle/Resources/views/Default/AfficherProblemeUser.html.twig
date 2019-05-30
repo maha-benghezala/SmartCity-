@@ -1,0 +1,191 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <section class="clearfix bg-dark listyPage">
+        <div class="content-admin-main-inner">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="dashboardPageTitle">
+                        <h2>Mes Problèmes</h2>
+                    </div>
+                    <div class="background-white p20 mb50">
+                        <div class="table-responsive"  data-pattern="priority-columns">
+                            <table class="table listingsTable">
+
+                            <thead>
+                            <tr class="rowItem">
+                                <th data-priority="">Probleme</th>
+                                <th data-priority="5">Publié à</th>
+                                <th data-priority="5">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for p in probleme %}
+                                <tr class="rowItem">
+                                    <td>
+                                        <ul class="list-inline listingsInfo">
+                                            <li><a href="#"><img src="{{ asset(p.image) }}" alt="Image Listings" height="80" width="80"></a></li>
+                                            <li>
+                                                <h3>{{ p.titre }} <i class="fa fa-check-circle" aria-hidden="true"></i></h3>
+                                                <h5>{{ p.description }} </h5>
+
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <span class="category">{{ p.getDate()|date }}</span>
+                                    </td>
+
+                                    <td>
+                                        {% if p.enabled == true %}
+                                            <span class="label label-success">Acceptée</span>
+                                        {% else %}
+                                            <span class="label label-warning">En attente</span>
+                                        {% endif %}
+                                    </td>
+                                    {% if p.idUser == app.user %}
+                                        <td>
+                                            <span class="category">Ma Probleme</span>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+
+        }
+
+    </style>
+    <script>
+        // Note: This example requires that you consent to location sharing when
+        // prompted by your browser. If you see the error "The Geolocation service
+        // failed.", it means you probably did not give permission for the browser to
+        // locate you.
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 12
+            });
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var contentString = 'Voila ma position';
+                    {% for loc in probleme %}
+
+                    var contentString{{ loc.id }} = '<h1>{{ loc.titre }}</h1><br>'+'Signales: {{ loc.nbsignale }}<br>';
+                    var infowindow{{ loc.id }} = new google.maps.InfoWindow({
+                        content: contentString{{ loc.id }},
+                        maxWidth: 200
+                    });
+                    var marker{{ loc.id }} = new google.maps.Marker({
+                        position: {lat: {{ loc.latitude }}, lng: {{ loc.longitude}} },
+                        map: map,
+                        title: '{{ loc.titre }}'
+                    });
+                    marker{{ loc.id }}.addListener('click', function() {
+                        infowindow{{ loc.id }}.open(map, marker{{ loc.id }});
+                    });
+
+                    {% endfor %}
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        maxWidth: 200
+                    });
+
+                    map.setCenter(pos);
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        title: 'Ma position'
+                    });
+                    marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                    });
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+        }
+
+    </script>
+{% block js %}
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYy42R1JcZqt_UlmfQqBP6nlZt57aNJzs&callback=initMap">
+    </script>
+    <script>
+
+    function popup(page) {
+    window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+    }
+    </script>
+
+    <script>
+        $("#hello").change(function (e) {
+            var param = {
+                "mesprobleme" : $( "#hello option:selected" ).text(),
+            };
+            console.log(param.vote);
+            $.post("{{ path('Afficher_Probleme_user') }}",param,function (data) {
+
+                console.log(JSON.parse(data));
+                if(status = "success"){
+                    $("#map").hide();
+                    $("#end").hide();
+                    if(data.length==0) {
+                        console.log("fama chay");
+                    }
+                    else {
+                        $.each(data, function (index, element) {
+                            console.log(index, element);
+                            $('#mes').append(
+                                '<div class="col-sm-6 col-xs-12">' +
+                                '<div class="thingsBox thinsSpace">' +
+                                '<div class="thingsImage">' +
+                                '<img src="' + element.image + '" alt="Image things">' +
+                                '<div class="thingsMask">' +
+                                '<h2>' + element.titre + '<i class="fa fa-check-circle" aria-hidden="true"></i></h2>' +
+                                '<p>' + element.adresse + '</p>'
+                            );
+                        })
+                    }
+                }
+            });
+        })
+    </script>
+    {% endblock %}
+{% endblock %}

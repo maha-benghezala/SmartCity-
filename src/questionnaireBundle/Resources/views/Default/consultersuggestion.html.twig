@@ -1,0 +1,66 @@
+{% extends('base.html.twig') %}
+{% block section %}
+    <section class="clearfix bg-dark listyPage">
+        <div class="content-admin-main-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="dashboardPageTitle">
+                        <h2>Solutions</h2>
+                    </div>
+                    <div class="background-white p20 mb50">
+                    <div class="table-responsive"  data-pattern="priority-columns">
+                        <table class="table listingsTable">
+                            <thead>
+                            <tr class="rowItem">
+                                <th data-priority="">Solution</th>
+                                <th data-priority="5">Description</th>
+                                <th data-priority="5">Gérer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for suggestion in Suggestion %}
+                                <tr class="rowItem">
+                                    <td>
+                                        <ul class="list-inline listingsInfo">
+                                            <li><a href="#"><img src="{{ asset(suggestion.Probleme.image) }}" alt="Image Listings" height="80" width="80"></a></li>
+                                            <li>
+                                                <h3>{{ suggestion.titre }} <i class="fa fa-check-circle" aria-hidden="true"></i></h3>
+                                                <span class="category">{{ suggestion.getDateDebut()|date }}</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        {{ suggestion.description }}
+                                    </td>
+                                    <td>
+                                         {% if suggestion.rapport != null %}
+                                            <a href='javascript:popup("http://127.0.0.1:8000/Rapport/{{ suggestion.id }}")' class="btn btn-primary btn-block">Voir Rapport</a>
+                                            <br>
+                                            {% endif %}
+                                        <a href="#" class="btn btn-primary btn-block">Voir details</a>
+                                        <a href='javascript:popup("http://127.0.0.1:8000/suggerer/resultat/{{ suggestion.id }}")' class="btn btn-primary btn-block">Résultats</a>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block js %}
+    <script>
+
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}

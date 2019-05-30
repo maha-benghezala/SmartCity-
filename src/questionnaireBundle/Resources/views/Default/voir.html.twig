@@ -1,0 +1,49 @@
+{% extends('base.html.twig') %}
+{% block section %}
+<br>
+    <section class="clearfix howWorksSection">
+        <div class="container">
+            <div class="background-white p20 mb50">
+            {% for c in Probleme %}
+                <div class="card" data-background-image="{{ asset(c.image) }}" style="background-image: url({{ asset(c.image) }});">
+                    <div class="card-label">
+                        <a href="listing-detail.html">{{ c.getDate()|date }}</a>
+                    </div><!-- /.card-label -->
+
+                    <div class="card-content">
+                        <h2><a href="listing-detail.html">{{ c.titre }}</a></h2>
+
+                        <div class="card-meta">
+                            <i class="fa fa-map-o"></i> {{ c.description }}
+                        </div><!-- /.card-meta -->
+                        <div class="card-meta">
+                            <i class="fa fa-map-o"></i> By : {{ c.idUser.nom }}
+                        </div><!-- /.card-meta -->
+                        {% if c.video != null %}
+                        <div class="card-meta">
+                            <i class="fa fa-youtube-play"></i><a href='javascript:popup("http://127.0.0.1:8000/{{ c.video }}")'>Voir le vidéo <i class="fa fa-play"></i></a>
+
+                        </div><!-- /.card-rating -->
+                        <video width="400" height="400" controls  style="display: none">
+                            <source src="{{ asset(c.video) }}" type="video/mp4">
+                            <source src="{{ asset(c.video) }}" type="video/mkv">
+                        </video>
+                        {% endif %}
+                    </div><!-- /.card-content -->
+                </div>
+            {% endfor %}
+            </div>
+            </div>
+    </section>
+
+
+
+{% endblock %}
+{% block js %}
+    <script>
+
+        function popup(page) {
+            window.open(page,'popup','width=685, height=455, toolbar=false, scrollbars=false');
+        }
+    </script>
+{% endblock %}
